@@ -13,18 +13,18 @@ interface IFont {
     // address that uploaded font for credits
     function fontUploader() external returns (address);
 
-    // ttf, woff, otf, etc.
+    // lowercase ttf, woff, otf, etc.
     // this info is necessary so projects know how to properly render the fonts
     function fontFormatType() external returns (string memory);
 
-    // font name, ie 'space-grotesk'
+    // lowercase font name, ie 'space-grotesk'
     function fontName() external returns (string memory);
 
-    // bold, medium, light, etc
+    // lowercase bold, medium, light, etc
     // necessary to differentiate uploaded fonts that are the same but different weights
     function fontWeight() external returns (string memory);
 
-    // normal, italic, oblique, etc
+    // lowercase normal, italic, oblique, etc
     // necessary to differentiate uploaded fonts that are the same but different style
     function fontStyle() external returns (string memory);
 

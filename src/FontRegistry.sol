@@ -10,18 +10,18 @@ import {OwnableRoles} from "solady/auth/OwnableRoles.sol";
 /// address where the font is living and returns the base64 encoded font string.
 /// ie getFont('TimesNewRoman') will return a base64 encoded font as a string if it exists in this registry.
 ///
-/// We allow anyone to upload fonts to chain however this wish (as people may have different preferences)
-/// but they MUST implement the IFont interface and cohere to this standard if they wish to be added to this
+/// We allow anyone to upload fonts to chain any way they want (as people may have different preferences),
+/// but they MUST implement the IFont interface and make the font data immutable if they wish to be added to this
 /// registry.
 ///
 /// We can't prevent anyone from uploading anything on-chain which is why we leave the actual logic open ended
-/// to the person uploading. The reason you want to implement the IFont interface and be added to the registry
-/// is to be easily searched by others as it will show up on the Font Registry website. Additionally, this
-/// font registry will ideally be the hub of all on-chain fonts so that all projects are on the same standard.
+/// to the person uploading. The benefit of implementing the IFont interface and being added to the registry
+/// is to be easily searched and used by other projects.
+/// This font registry will ideally be the hub of all on-chain fonts so that all projects are on the same standard.
 ///
-/// After uploading a font on-chain that implements IFont, please submit a request to add it to the registry
-/// where the maintainers of this registry will verify the font is proper and non malicious before adding it
-/// to the registry. All credits will be given to the font uploaders.
+/// After uploading a font on-chain that implements IFont and the font data is immutable, please submit a request
+/// to add it to the registry where the maintainers will verify the font is proper and non malicious before adding it.
+/// All credits will be given to the font uploaders.
 ///
 /// @author @0x_beans
 contract FontRegistry is OwnableRoles {
