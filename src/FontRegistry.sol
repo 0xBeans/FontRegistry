@@ -25,6 +25,9 @@ import {OwnableRoles} from "solady/auth/OwnableRoles.sol";
 ///
 /// @author @0x_beans
 contract FontRegistry is OwnableRoles {
+    event FontAdded(address indexed fontAddress);
+    event FontRemoved(address indexed fontAddress);
+
     // keccak256(fontName) => address of base64 encoded font
     mapping(bytes32 => address) public fonts;
 
@@ -35,17 +38,19 @@ contract FontRegistry is OwnableRoles {
     /// @dev only owners (maintainers) of the registry can add fonts after properly verifying the font
     /// @param fontAddress address of the IFont contract
     function addFontToRegistry(address fontAddress) external onlyOwner {
-        fonts[
-            keccak256(abi.encodePacked(IFont(fontAddress).fontName()))
-        ] = fontAddress;
+        bytes32 fontHash = keccak256(abi.encodePacked(IFont(fontAddress).fontName()));
+        require(fonts[fontHash] == address(0));
+        fonts[fontHash] = fontAddress;
+        emit FontAdded(fontAddress);
     }
 
     /// @dev only owners (maintainers) of the registry can delete fonts from the registry
     /// @param fontAddress address of the IFont contract
     function deleteFontFromRegistry(address fontAddress) external onlyOwner {
-        delete fonts[
-            keccak256(abi.encodePacked(IFont(fontAddress).fontName()))
-        ];
+        bytes32 fontHash = keccak256(abi.encodePacked(IFont(fontAddress).fontName()));
+        require(fonts[fontHash] != address(0));
+        delete fonts[fontHash];
+        emit FontRemoved(fontAddress);
     }
 
     /// @dev query existing fonts in the registry (searchable on the website)
